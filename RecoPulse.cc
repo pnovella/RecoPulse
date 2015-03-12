@@ -52,7 +52,7 @@ bool RecoPulse::execute(gate::Event& evt){
   
   for (ith = pmts.begin(); ith != pmts.end(); ++ith){
     
-    _m.message("PMT",(*ith)->GetSensorID(),gate::NORMAL);
+    _m.message("PMT",(*ith)->GetSensorID(),gate::VERBOSE);
     
     gate::Waveform& wf = (*ith)->GetWaveform();
     
@@ -78,11 +78,13 @@ bool RecoPulse::execute(gate::Event& evt){
       
       pul->SetAmplitude(_recoMan->getPeakQs()[i]);
 
-      //pul->SetStartTime(times[_recoMan->getPeakTs()[i]]);
-      pul->SetStartTime(times[_recoMan->getPeakIntTs()[i]]);
+      pul->SetStartTime(times[_recoMan->getPeakTs()[i]]);
+
+      //pul->SetStartTime(times[_recoMan->getPeakIntTs()[i]]);
       
-      //pul->SetEndTime(times[_recoMan->getPeakTends()[i]]);
-      pul->SetEndTime(times[_recoMan->getPeakIntTends()[i]]);
+      pul->SetEndTime(times[_recoMan->getPeakTends()[i]]);
+
+      //pul->SetEndTime(times[_recoMan->getPeakIntTends()[i]]);
       
       pul->store("RecoPulse",1);
 

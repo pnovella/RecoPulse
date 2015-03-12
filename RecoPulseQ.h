@@ -29,9 +29,7 @@
 #include<string>
 #include<vector>
 
-#include<Messenger.h>
 #include<RecoPulseUtils.h>
-
 
 class Qint {
 

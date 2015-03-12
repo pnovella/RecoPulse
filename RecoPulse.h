@@ -1,9 +1,7 @@
 #ifndef _RecoPulse__
 #define _RecoPulse__
 
-#include <TSystem.h>
-
-#include <Centella.h>
+#include <GATE/Centella.h>
 #include <RecoManager.h>
 
 class RecoPulse : public gate::IAlgo {

@@ -14,7 +14,7 @@ OBJECTS = $(filter-out RunRecoPulse.o, $(SOURCES:.cc=.o))
 
 # include options for this package
 INCFLAGS = -I.
-INCFLAGS += -I$(GATE_DIR)/include
+INCFLAGS += -I$(GATE_DIR)
 
 # platform-specific options
 OSNAME          = $(shell uname -s)

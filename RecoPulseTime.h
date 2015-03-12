@@ -28,9 +28,10 @@
 #include<map>
 #include<string>
 #include<vector>
-#include<Messenger.h>
+
 #include<RecoPulseUtils.h>
-#include<Error.h>
+
+#include<GATE/Error.h>
 
 class timeDef {
   

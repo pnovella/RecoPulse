@@ -35,7 +35,7 @@
 
 #include<TSystem.h> // Form function. To be fixed!!!
 
-#include<Error.h>
+#include<GATE/Error.h>
 
 
 class Algo {

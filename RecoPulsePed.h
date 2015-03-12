@@ -29,7 +29,6 @@
 #define DCRecoPulsePed_hh
 
 #include<vector>
-#include<Messenger.h>
 
 #include<RecoPulseUtils.h>
 

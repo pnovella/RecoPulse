@@ -11,13 +11,14 @@
   gSystem->Load("$(GATE_DIR)/lib/libRecoPulse.so");
 
   RecoPulse* rp = new RecoPulse(gate::NORMAL,"RP");
-
-  //Message::SetLevelMSG("RecoPulseAlgo",gate::DUMP);
+  
+  std::string ifname = "../../../DATA/DST_Na22_3200.root";
+  std::string ofname = "../../../DATA/DST_Na22_3200_RP.root";
 
   gate::Centella::instance(gate::NORMAL);
-  gate::Centella::instance()->addInputFile("../../../DATA/DST_Na22_3200.root");
-  gate::Centella::instance()->addOutputFile("output_dst.root");
-  gate::Centella::instance()->setNevents(1);
+  gate::Centella::instance()->addInputFile(ifname);
+  gate::Centella::instance()->addOutputFile(ofname);
+  gate::Centella::instance()->setNevents(1000000);
   gate::Centella::instance()->saveEvents(true);
   gate::Centella::instance()->saveHistos(true);
   gate::Centella::instance()->addAlgo("RecoPulse",rp);
