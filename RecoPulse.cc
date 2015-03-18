@@ -93,11 +93,11 @@ bool RecoPulse::execute(gate::Event& evt){
       
       pul->SetAmplitude(_recoMan->getPeakQs()[i]);
 
-      pul->SetStartTime(_recoMan->getPeakTs()[i]*_pmtSampWidth);
+      pul->SetStartTime(_recoMan->getPeakIntTs()[i]*_pmtSampWidth);
       
       //pul->SetStartTime(times[_recoMan->getPeakIntTs()[i]]);
       
-      pul->SetEndTime(_recoMan->getPeakTends()[i]*_pmtSampWidth );
+      pul->SetEndTime(_recoMan->getPeakIntTends()[i]*_pmtSampWidth );
 
       //pul->SetEndTime(times[_recoMan->getPeakIntTends()[i]]);
       
