@@ -29,10 +29,28 @@ class RecoPulse : public gate::IAlgo {
   //! finalize algorithm
   bool finalize();          
   
+  //! set pulse label
+  inline void SetPulseLabel(std::string lb) {_pulseLabel=lb;}
+
+   //! set pulse label
+  inline void ClearWF(bool ok) {_clearWF=ok;}
+
  private:
   
   //! pulse recosntruction manager
   RecoManager* _recoMan;
+
+  //! PMT sampling width
+  double _pmtSampWidth;
+  
+  //! SiPM sampling width
+  double _sipmSampWidth;
+  
+  //! pulse label
+  std::string _pulseLabel;
+  
+  //! clear waveform?
+  bool _clearWF;
 
   ClassDef(RecoPulse,0)
     

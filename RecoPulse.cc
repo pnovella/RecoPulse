@@ -7,8 +7,10 @@ ClassImp(RecoPulse)
 RecoPulse::RecoPulse(gate::VLEVEL vl, std::string label) : 
 IAlgo(vl,"RecoPulse",0,label){
 //==========================================================================
+    
+    _clearWF = false;
 
-
+    _pulseLabel = "RecoPulse_v1";
 }
 
 //==========================================================================
@@ -17,6 +19,13 @@ RecoPulse::RecoPulse(const gate::ParamStore& gs,
   IAlgo(gs,vl,"RecoPulse",0,label){
 //==========================================================================
 
+    try{  _clearWF = gs.fetch_istore("CLEAR_WF");  }
+    
+    catch(exception& e) { _clearWF = false; }
+
+    try{  _pulseLabel = gs.fetch_istore("PULSE_LABEL");  }
+
+    catch(exception& e) { _pulseLabel = "RecoPulse_v1";}
 
 }
 
@@ -28,11 +37,19 @@ bool RecoPulse::initialize(){
   
   gate::Centella::instance()
     
-    ->hman()->h1("Qch","Channel Q; Charge (ADC); Entries ",10,0,100);
+    ->hman()->h1("Qch","Channel Q; Charge (ADC); Entries ",10,0,1000);
+  
+   gate::Centella::instance()
+    
+    ->hman()->h1("Qpeak","Pulse Q; Charge (ADC); Entries ",10,0,1000);
   
   _recoMan =  new RecoManager();
   
   _recoMan->config("peakWindow");
+
+  _pmtSampWidth = 25;
+
+  _sipmSampWidth = 1000;
 
   return true;
 
@@ -56,17 +73,15 @@ bool RecoPulse::execute(gate::Event& evt){
     
     gate::Waveform& wf = (*ith)->GetWaveform();
     
-    const std::vector<std::pair<double,double> >& pprof = wf.GetData(); 
+    const std::vector<std::pair<unsigned short,unsigned short> >& 
+        
+        pprof = wf.GetData(); 
     
     std::vector<short unsigned int> prof;
     
-    std::vector<double> times;
-
-    std::vector<std::pair<double,double> >::const_iterator it;
+    std::vector<std::pair<unsigned short, unsigned short> >::const_iterator it;
     
-    for (it = pprof.begin(); it != pprof.end(); ++it){
-      
-      times.push_back(it->first); prof.push_back(it->second);}
+    for (it = pprof.begin();it != pprof.end();++it){prof.push_back(it->second);}
     
     _recoMan->reset();
     
@@ -78,24 +93,29 @@ bool RecoPulse::execute(gate::Event& evt){
       
       pul->SetAmplitude(_recoMan->getPeakQs()[i]);
 
-      pul->SetStartTime(times[_recoMan->getPeakTs()[i]]);
-
+      pul->SetStartTime(_recoMan->getPeakTs()[i]*_pmtSampWidth);
+      
       //pul->SetStartTime(times[_recoMan->getPeakIntTs()[i]]);
       
-      pul->SetEndTime(times[_recoMan->getPeakTends()[i]]);
+      pul->SetEndTime(_recoMan->getPeakTends()[i]*_pmtSampWidth );
 
       //pul->SetEndTime(times[_recoMan->getPeakIntTends()[i]]);
       
-      pul->store("RecoPulse",1);
+      pul->SetMaxADC((int)_recoMan->getPeakImaxs()[i]);
+
+      gate::Centella::instance()->hman()->fill("Qpeak",_recoMan->getPeakQs()[i]);
+      
+      pul->store("RecoPulse",_pulseLabel);
 
       wf.AddPulse(pul);
-      
-    }
-   
-    gate::Centella::instance()->hman()->fill("Qch",_recoMan->getQ());
-  
-  }
 
+    }
+    
+    if (_clearWF) wf.ClearData();
+    
+    gate::Centella::instance()->hman()->fill("Qch",_recoMan->getQ());
+
+  } //end of PMT loop
   
   return true;
 
