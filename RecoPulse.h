@@ -51,6 +51,7 @@ class RecoPulse : public gate::IAlgo {
   
   //! clear waveform?
   bool _clearWF;
+  
 
   ClassDef(RecoPulse,0)
     

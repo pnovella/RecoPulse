@@ -26,7 +26,7 @@ RecoPulse::RecoPulse(const gate::ParamStore& gs,
     try{  _pulseLabel = gs.fetch_istore("PULSE_LABEL");  }
 
     catch(exception& e) { _pulseLabel = "RecoPulse_v1";}
-
+    
 }
 
 //==========================================================================
@@ -50,7 +50,7 @@ bool RecoPulse::initialize(){
   _pmtSampWidth = 25;
 
   _sipmSampWidth = 1000;
-
+  
   return true;
 
 }
@@ -62,15 +62,21 @@ bool RecoPulse::execute(gate::Event& evt){
   _m.message("Executing algorithm",this->getAlgoLabel(),gate::VERBOSE);
   
   _m.message("Event number:",evt.GetEventID(),gate::VERBOSE);
-
+  
   std::vector<gate::Hit*> pmts = evt.GetHits(gate::PMT);
   
   std::vector<gate::Hit*>::iterator ith;
   
+  gate::Run* runInfo = &gate::Centella::instance()->getRun();
+
   for (ith = pmts.begin(); ith != pmts.end(); ++ith){
     
     _m.message("PMT",(*ith)->GetSensorID(),gate::VERBOSE);
     
+    (*ith)->SetState(gate::RECOED);
+    
+    double gain = fabs(runInfo->GetSensor((*ith)->GetSensorID())->GetGain());
+
     gate::Waveform& wf = (*ith)->GetWaveform();
     
     const std::vector<std::pair<unsigned short,unsigned short> >& 
@@ -91,16 +97,12 @@ bool RecoPulse::execute(gate::Event& evt){
       
       gate::Pulse* pul = new gate::Pulse(); //check who is deleting!!!!
       
-      pul->SetAmplitude(_recoMan->getPeakQs()[i]);
-
+      pul->SetAmplitude(_recoMan->getPeakQs()[i]/gain);//TO CHECK: multiply per sample width?
+      
       pul->SetStartTime(_recoMan->getPeakIntTs()[i]*_pmtSampWidth);
-      
-      //pul->SetStartTime(times[_recoMan->getPeakIntTs()[i]]);
-      
+            
       pul->SetEndTime(_recoMan->getPeakIntTends()[i]*_pmtSampWidth );
 
-      //pul->SetEndTime(times[_recoMan->getPeakIntTends()[i]]);
-      
       pul->SetMaxADC((int)_recoMan->getPeakImaxs()[i]);
 
       gate::Centella::instance()->hman()->fill("Qpeak",_recoMan->getPeakQs()[i]);
