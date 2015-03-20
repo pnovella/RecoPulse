@@ -37,9 +37,17 @@ class RecoPulse : public gate::IAlgo {
 
  private:
   
-  //! pulse recosntruction manager
-  RecoManager* _recoMan;
+  //! set up RecoManager parameters
+  void confRecoMan();
 
+ private:
+  
+  //! PMT pulse recosntruction manager
+  RecoManager* _pmtRecoMan;
+
+  //! SiPM pulse recosntruction manager
+  RecoManager* _siRecoMan;
+  
   //! PMT sampling width
   double _pmtSampWidth;
   
