@@ -97,7 +97,9 @@ bool RecoPulse::execute(gate::Event& evt){
       
       gate::Pulse* pul = new gate::Pulse(); //check who is deleting!!!!
       
-      pul->SetAmplitude(_recoMan->getPeakQs()[i]/gain);//TO CHECK: multiply per sample width?
+      pul->SetSensorID((*ith)->GetSensorID());
+
+      pul->SetAmplitude(_recoMan->getPeakQs()[i]/gain);
       
       pul->SetStartTime(_recoMan->getPeakIntTs()[i]*_pmtSampWidth);
             
