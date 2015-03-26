@@ -127,7 +127,7 @@ bool RecoPulse::execute(gate::Event& evt){
       
       pul->SetSensorID((*ith)->GetSensorID());
 
-      pul->SetAmplitude(_pmtRecoMan->getPeakQs()[i]/gain);
+      pul->SetCharge(_pmtRecoMan->getPeakQs()[i]/gain);
       
       pul->SetStartTime(_pmtRecoMan->getPeakIntTs()[i]*_pmtSampWidth);
             
