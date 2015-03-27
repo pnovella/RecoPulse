@@ -119,7 +119,7 @@ bool RecoPulse::execute(gate::Event& evt){
     
     wf.SetBaseline(_pmtRecoMan->getChPedMean());
 
-    wf.SetBaselineRMS(_pmtRecoMan->getChPedRMS());
+    wf.SetBaselineSig(_pmtRecoMan->getChPedRMS());
     
     for (size_t i=0; i< _pmtRecoMan->getNpeaks(); i++){
       
@@ -183,7 +183,7 @@ bool RecoPulse::execute(gate::Event& evt){
     
     wf.SetBaseline(_siRecoMan->getChPedMean());
 
-    wf.SetBaselineRMS(_siRecoMan->getChPedRMS());
+    wf.SetBaselineSig(_siRecoMan->getChPedRMS());
     
   }
 
