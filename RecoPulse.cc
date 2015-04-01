@@ -97,6 +97,8 @@ bool RecoPulse::execute(gate::Event& evt){
     
     (*ith)->SetState(gate::RECOED);
     
+    if ((*ith)->GetSensorID()<20) continue;
+
     double gain = fabs(runInfo->GetSensor((*ith)->GetSensorID())->GetGain());
 
     gate::Waveform& wf = (*ith)->GetWaveform();
@@ -184,7 +186,7 @@ bool RecoPulse::execute(gate::Event& evt){
     wf.SetBaseline(_siRecoMan->getChPedMean());
 
     wf.SetBaselineSig(_siRecoMan->getChPedRMS());
-    
+
   }
 
   return true;
