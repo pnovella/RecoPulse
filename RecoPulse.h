@@ -39,6 +39,9 @@ class RecoPulse : public gate::IAlgo {
   
   //! set up RecoManager parameters
   void confRecoMan();
+  
+  //! initialize parameters
+  void initParams();
 
  private:
   
@@ -53,6 +56,8 @@ class RecoPulse : public gate::IAlgo {
   
   //! SiPM sampling width
   double _sipmSampWidth;
+    
+ private:
   
   //! pulse label
   std::string _pulseLabel;
@@ -60,6 +65,11 @@ class RecoPulse : public gate::IAlgo {
   //! clear waveform?
   bool _clearWF;
   
+  //! minimum pulse amplitude
+  double _Imin;
+
+  //! numbe of sigmas above noise
+  int _nSig;
 
   ClassDef(RecoPulse,0)
     

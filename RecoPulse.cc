@@ -7,10 +7,8 @@ ClassImp(RecoPulse)
 RecoPulse::RecoPulse(gate::VLEVEL vl, std::string label) : 
 IAlgo(vl,"RecoPulse",0,label){
 //==========================================================================
-    
-    _clearWF = false;
-
-    _pulseLabel = "RecoPulse_v1";
+        
+    this->initParams();
 }
 
 //==========================================================================
@@ -18,15 +16,39 @@ RecoPulse::RecoPulse(const gate::ParamStore& gs,
 		     gate::VLEVEL vl, std::string label) :
   IAlgo(gs,vl,"RecoPulse",0,label){
 //==========================================================================
+  
+    this->initParams();
 
     try{  _clearWF = gs.fetch_istore("CLEAR_WF");  }
     
-    catch(exception& e) { _clearWF = false; }
+    catch(exception& e) { }
 
-    try{  _pulseLabel = gs.fetch_istore("PULSE_LABEL");  }
+    try{  _pulseLabel = gs.fetch_sstore("PULSE_LABEL");  }
 
-    catch(exception& e) { _pulseLabel = "RecoPulse_v1";}
+    catch(exception& e) { }
     
+    try{  _Imin = gs.fetch_dstore("MIN_AMPLITUDE");  }
+
+    catch(exception& e) { }
+
+    try{  _nSig = gs.fetch_istore("N_SIGMA");  }
+
+    catch(exception& e) { }
+
+}
+
+//==========================================================================
+void RecoPulse::initParams(){
+//==========================================================================
+  
+  _clearWF = false;
+   
+  _pulseLabel = "RecoPulse_v1";
+  
+  _Imin = 5;
+
+  _nSig = 5;
+
 }
 
 //==========================================================================
@@ -62,9 +84,9 @@ void RecoPulse::confRecoMan(){
   
   _pmtRecoMan->setPEDwindow(0,100);
   
-  _pmtRecoMan->setNsigOverPed(5);
+  _pmtRecoMan->setNsigOverPed(_nSig);
   
-  _pmtRecoMan->setImin(5);
+  _pmtRecoMan->setImin(_Imin);
 
   //---
   
