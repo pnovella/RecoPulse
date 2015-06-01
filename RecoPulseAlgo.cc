@@ -1953,8 +1953,12 @@ double peakWindow::computeQ(RPPulse& ipulse){
   _TsError.clear();_QsError.clear();
 
   this->checkPed(); 
+  
+  double thr = _ped - this->getPedAna()->getNsigOverPed()*_pedRMS;
+  
+  if (!ipulse.getPeakGatherer().status()) ipulse.getPeaks(thr,30);
 
-  if (!ipulse.getPeakGatherer().status()) ipulse.getPeaks(_ped,30);
+  //if (!ipulse.getPeakGatherer().status()) ipulse.getPeaks(_ped,30);
   
   vector<int> T0s = ipulse.getPeakGatherer().getT0s();
   
