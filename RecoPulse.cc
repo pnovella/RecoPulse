@@ -31,7 +31,7 @@ RecoPulse::RecoPulse(const gate::ParamStore& gs,
 
     catch(exception& e) { }
 
-    try{  _nSig = gs.fetch_istore("N_SIGMA");  }
+    try{  _nSig = gs.fetch_dstore("N_SIGMA");  }
 
     catch(exception& e) { }
 

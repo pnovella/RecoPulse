@@ -69,7 +69,7 @@ class RecoPulse : public gate::IAlgo {
   double _Imin;
 
   //! numbe of sigmas above noise
-  int _nSig;
+  double _nSig;
 
   ClassDef(RecoPulse,0)
     
