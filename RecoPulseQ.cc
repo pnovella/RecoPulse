@@ -96,7 +96,7 @@ double fixedTimeQWindow::computeQ(RPPulse& ipulse,size_t tmin,size_t tmax){
 
   size_t min = this->tmin();
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   if (!max) max = pulse.size();  
   
@@ -155,7 +155,7 @@ double slidingQWindow::computeQ(RPPulse& ipulse){
   // We've done one full computation of rawQ for the first window.
   // Now find the Qs of the shifted windows by a cheaper method:
   // subtract from one end and add to the other.
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   const double ped = this->getPedestal();
 
@@ -202,7 +202,7 @@ double slidingQWindow::computeWindowQ(RPPulse& ipulse,
   
   this->checkPedestal();
    
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   double pulsesum = 0;
   size_t integratedcount = 0;

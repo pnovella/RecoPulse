@@ -76,7 +76,7 @@ public:
   
 
   /// perform full reconstruction
-  void reco( const std::vector<unsigned short>&);
+  void reco( const std::vector<unsigned int>&);
   
   //---- Charge ----//
   
@@ -96,30 +96,30 @@ public:
   void setAWRmax(double r);
 
   /// compute pulse charge within window
-  double computeQ( const std::vector<unsigned short>&);
+  double computeQ( const std::vector<unsigned int>&);
   
   //---- time ----//
 
   /// compute start time for integration window
-  int computeT0( const std::vector<unsigned short>&);
+  int computeT0( const std::vector<unsigned int>&);
   
   /// compute end time for integration window
-  int computeT1( const std::vector<unsigned short>&);
+  int computeT1( const std::vector<unsigned int>&);
   
   /// compute arrival time
-  int computeTstart( const std::vector<unsigned short>&);
+  int computeTstart( const std::vector<unsigned int>&);
   
   /// compute final time
-  int computeTend( const std::vector<unsigned short>&);
+  int computeTend( const std::vector<unsigned int>&);
   
   /// compute time for maximum amplitude
-  int computeTmax( const std::vector<unsigned short>&);
+  int computeTmax( const std::vector<unsigned int>&);
   
   /// compute rise time 
-  int computeTrise( const std::vector<unsigned short>&);
+  int computeTrise( const std::vector<unsigned int>&);
 
   /// compute fall time 
-  int computeTfall( const std::vector<unsigned short>&);
+  int computeTfall( const std::vector<unsigned int>&);
   
   //---- pedestal ----//
   
@@ -136,7 +136,7 @@ public:
   bool useExtPedRMS();
 
   /// compute pedestal 
-  double computePED( const std::vector<unsigned short>&);
+  double computePED( const std::vector<unsigned int>&);
   
   /// set window for pedestal estimation
   void setPEDwindow(size_t,size_t);

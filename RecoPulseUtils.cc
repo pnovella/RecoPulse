@@ -35,7 +35,7 @@ spline3::spline3(const vector<double>& y){
 }
 
 //****************************************************
-spline3::spline3(const vector<unsigned short>& y){
+spline3::spline3(const vector<unsigned int>& y){
 //****************************************************
   
   vector<double> new_y; 
@@ -344,7 +344,7 @@ void peakGatherer::getBPPeaks(double thr,size_t nsamp){
 }
 
 //*****************************************************
-const vector<unsigned short>& RPPulse::getSubProfile(double ped){
+const vector<unsigned int>& RPPulse::getSubProfile(double ped){
 //*****************************************************
   
   _subProf.resize(0);
@@ -368,7 +368,7 @@ void RPPulse::smoothPed(double ped,size_t min, size_t max){
    */
 
 
-  vector<unsigned short> newProf;
+  vector<unsigned int> newProf;
   
   for (size_t i=0; i< this->size(); i++){ 
     

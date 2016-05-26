@@ -140,7 +140,7 @@ public:
   
   spline3();
   
-  spline3(const std::vector<unsigned short>&);
+  spline3(const std::vector<unsigned int>&);
 
   spline3(const std::vector<double>&);
 
@@ -178,7 +178,7 @@ class peakGatherer{
 
 private:
   
-  std::vector<unsigned short> _prof;
+  std::vector<unsigned int> _prof;
 
   std::vector<int> _T0s, _T1s;
   
@@ -189,7 +189,7 @@ public:
   
   peakGatherer(){_status=false;}
 
-  peakGatherer(const std::vector<unsigned short>& prof)
+  peakGatherer(const std::vector<unsigned int>& prof)
   {_prof=prof; _status=false;}
 
 
@@ -214,9 +214,9 @@ class RPPulse {
 
 private:
 
-  std::vector<unsigned short> _prof;
+  std::vector<unsigned int> _prof;
 
-  std::vector<unsigned short> _subProf;
+  std::vector<unsigned int> _subProf;
 
   // interpolation
   spline3 _spline;
@@ -229,7 +229,7 @@ private:
 
 public:
   
-  RPPulse(const std::vector<unsigned short>& prof){
+  RPPulse(const std::vector<unsigned int>& prof){
     
     _prof = prof; 
     
@@ -243,7 +243,7 @@ public:
   
   RPPulse(const RPPulse& pulse){
     
-    _prof =std::vector<unsigned short>(pulse.getProfile());
+    _prof =std::vector<unsigned int>(pulse.getProfile());
 
     //_spline = spline3(_prof);
 
@@ -277,11 +277,11 @@ public:
   
   peakGatherer getPeakGatherer(){return _peaks;}
 
-  const std::vector<unsigned short>& getProfile() const {return _prof;} 
+  const std::vector<unsigned int>& getProfile() const {return _prof;} 
 
   size_t size() const {return _prof.size();}
   
-  const std::vector<unsigned short>& getSubProfile(double ped);
+  const std::vector<unsigned int>& getSubProfile(double ped);
   
   void smoothPed(double,size_t,size_t);
 

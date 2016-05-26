@@ -233,7 +233,7 @@ double Algo::computeImax(RPPulse& ipulse){
   
   if (_Tmax==NOTIME) return 0.0;
 
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
   
   _Imax = _ped - pulse[(int) _Tmax];
   
@@ -255,7 +255,7 @@ void Algo::extendWindow(RPPulse& ipulse){
 
   //size_t nsigma = abs( this->getPedAna()->getNsigOverPed() );
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   while (true){
     
@@ -606,7 +606,7 @@ double simpleWindow::computeQ(RPPulse& ipulse){
 
   _Qs.clear();
 
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
   
   int t1 = this->getT1();
 
@@ -1170,7 +1170,7 @@ int slidingWindow::computeTmax(RPPulse& ipulse){
 
     //Message::MSG("RecoPulseAlgo",gate::DUMP,Form("... Maximum: %i",Tmax));
     
-    const vector<unsigned short>& pulse = ipulse.getProfile();
+    const vector<unsigned int>& pulse = ipulse.getProfile();
     
     if (Tmax!=NOTIME){ 
 
@@ -1954,11 +1954,12 @@ double peakWindow::computeQ(RPPulse& ipulse){
 
   this->checkPed(); 
   
-  double thr = _ped - this->getPedAna()->getNsigOverPed()*_pedRMS;
+  //double thr = _ped - this->getPedAna()->getNsigOverPed()*_pedRMS;
+  //double thr = _ped - 2*_pedRMS;
   
-  if (!ipulse.getPeakGatherer().status()) ipulse.getPeaks(thr,30);
+  //if (!ipulse.getPeakGatherer().status()) ipulse.getPeaks(thr,30);
 
-  //if (!ipulse.getPeakGatherer().status()) ipulse.getPeaks(_ped,30);
+  if (!ipulse.getPeakGatherer().status()) ipulse.getPeaks(_ped,10);
   
   vector<int> T0s = ipulse.getPeakGatherer().getT0s();
   

@@ -207,7 +207,7 @@ void RecoManager::useExtPedRMS(bool ok){
 }
 
 //*****************************************************************
-double RecoManager::computePED(const vector<unsigned short>& p){
+double RecoManager::computePED(const vector<unsigned int>& p){
 //*****************************************************************
   
   RPPulse rp = RPPulse(p); 
@@ -285,7 +285,7 @@ bool RecoManager::isGoodExtPedestal(){
 
 
 //*****************************************************************
-void RecoManager::reco(const vector<unsigned short>& p){
+void RecoManager::reco(const vector<unsigned int>& p){
 //*****************************************************************
   
   RPPulse rp = RPPulse(p); 
@@ -295,7 +295,7 @@ void RecoManager::reco(const vector<unsigned short>& p){
 }
 
 //******************************************************************
-double RecoManager::computeQ(const vector<unsigned short>& p){ 
+double RecoManager::computeQ(const vector<unsigned int>& p){ 
 //******************************************************************
   
   RPPulse rp = RPPulse(p); 
@@ -305,7 +305,7 @@ double RecoManager::computeQ(const vector<unsigned short>& p){
 }
 
 //******************************************************************
-int RecoManager::computeT0(const vector<unsigned short>& p){ 
+int RecoManager::computeT0(const vector<unsigned int>& p){ 
 //******************************************************************
   
   RPPulse rp = RPPulse(p); 
@@ -315,7 +315,7 @@ int RecoManager::computeT0(const vector<unsigned short>& p){
 }
 
 //******************************************************************
-int RecoManager::computeT1(const vector<unsigned short>& p){ 
+int RecoManager::computeT1(const vector<unsigned int>& p){ 
 //******************************************************************
 
   RPPulse rp = RPPulse(p); 
@@ -325,7 +325,7 @@ int RecoManager::computeT1(const vector<unsigned short>& p){
 }
 
 //******************************************************************
-int RecoManager::computeTstart(const vector<unsigned short>& p){ 
+int RecoManager::computeTstart(const vector<unsigned int>& p){ 
 //******************************************************************
 
   RPPulse rp = RPPulse(p); 
@@ -335,7 +335,7 @@ int RecoManager::computeTstart(const vector<unsigned short>& p){
 }
 
 //******************************************************************
-int RecoManager::computeTend(const vector<unsigned short>& p){ 
+int RecoManager::computeTend(const vector<unsigned int>& p){ 
 //******************************************************************
 
   RPPulse rp = RPPulse(p); 
@@ -346,7 +346,7 @@ int RecoManager::computeTend(const vector<unsigned short>& p){
 
 
 //******************************************************************
-int RecoManager::computeTmax(const vector<unsigned short>& p){ 
+int RecoManager::computeTmax(const vector<unsigned int>& p){ 
 //******************************************************************
   
   RPPulse rp = RPPulse(p); 
@@ -356,7 +356,7 @@ int RecoManager::computeTmax(const vector<unsigned short>& p){
 }
 
 //******************************************************************
-int RecoManager::computeTrise(const vector<unsigned short>& p){ 
+int RecoManager::computeTrise(const vector<unsigned int>& p){ 
 //******************************************************************
 
   RPPulse rp = RPPulse(p); 
@@ -366,7 +366,7 @@ int RecoManager::computeTrise(const vector<unsigned short>& p){
 }
 
 //******************************************************************
-int RecoManager::computeTfall(const vector<unsigned short>& p){ 
+int RecoManager::computeTfall(const vector<unsigned int>& p){ 
 //******************************************************************
   
   RPPulse rp = RPPulse(p);   

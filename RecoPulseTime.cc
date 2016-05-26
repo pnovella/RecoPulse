@@ -76,11 +76,11 @@ int thresholdTime::computeT0(RPPulse& ipulse){
     Returns sample index of pulse defining t0
   */
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   int isample=0; bool found = false;
   
-  vector<unsigned short>::const_iterator iamp;
+  vector<unsigned int>::const_iterator iamp;
 	  
   for( iamp = pulse.begin(); iamp != pulse.end(); iamp++ ){ 
 
@@ -109,7 +109,7 @@ int thresholdTime::computeT1(RPPulse& ipulse){
   */
   
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   if (this->getT0()==NOTIME) this->computeT0(ipulse);
   
@@ -117,7 +117,7 @@ int thresholdTime::computeT1(RPPulse& ipulse){
 
   int isample=this->getT0(); bool found = false;
   
-  vector<unsigned short>::const_iterator iamp;
+  vector<unsigned int>::const_iterator iamp;
   
   for( iamp = pulse.begin()+this->getT0(); iamp != pulse.end(); iamp++ ){ 
     
@@ -166,7 +166,7 @@ int thresholdTime::computeTmax(RPPulse& ipulse){
     Returns sample index of pulse with max amp in [Tstart,Tend]
   */
 
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   if (this->getTstart()==NOTIME) this->computeTstart(ipulse);
 
@@ -188,7 +188,7 @@ int thresholdTime::computeTmax(RPPulse& ipulse){
   double max = fabs(pulse[fsample]-ped);
   //double max = 0;
 
-  vector<unsigned short>::const_iterator iamp;
+  vector<unsigned int>::const_iterator iamp;
   
   for( iamp = pulse.begin() + fsample; 
        iamp != pulse.begin() + lsample; 
@@ -323,7 +323,7 @@ int windowTime::computeWTstart(RPPulse& ipulse){
 
   this->checkPedestal();
 
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   int tstart = 0;
   
@@ -351,7 +351,7 @@ int windowTime::computeSLTstart(RPPulse& ipulse){
    
   if (this->getTmax()==NOTIME) this->computeTmax(ipulse);
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   int x0 = this->getTmax();
   
@@ -383,7 +383,7 @@ int windowTime::computeMaxTstart(RPPulse& ipulse){
   
   if (this->getTmax()==NOTIME) this->computeTmax(ipulse);
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   size_t fsample = this->getTmax();
   
@@ -412,11 +412,11 @@ int windowTime::computeThTstart(RPPulse& ipulse){
    
   this->checkWindow();
   
-  vector<unsigned short> pulse = ipulse.getProfile();
+  vector<unsigned int> pulse = ipulse.getProfile();
 
   int isample=this->getT0(); bool found = false;
   
-  vector<unsigned short>::iterator iamp;
+  vector<unsigned int>::iterator iamp;
   
   for( iamp = pulse.begin()+this->getT0(); 
        iamp != pulse.begin()+this->getT1(); iamp++ ){ 
@@ -447,7 +447,7 @@ int windowTime::computeMaxTend(RPPulse& ipulse){
   
   if (this->getTmax()==NOTIME) this->computeTmax(ipulse);
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   int fsample = this->getTmax();
   
@@ -481,11 +481,11 @@ int windowTime::computeThTend(RPPulse& ipulse){
    
   this->checkWindow();
   
-  vector<unsigned short> pulse = ipulse.getProfile();
+  vector<unsigned int> pulse = ipulse.getProfile();
 
   int isample=this->getT1(); bool found = false;
   
-  vector<unsigned short>::iterator iamp;
+  vector<unsigned int>::iterator iamp;
   
   for( iamp = pulse.begin()+this->getT1(); 
        iamp != pulse.begin()+this->getT0(); iamp-- ){ 
@@ -530,13 +530,13 @@ int windowTime::computeTmax(RPPulse& ipulse){
   
   int msample = fsample; int isample = fsample; 
  
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
  
   double ped = this->getPedestal();
 
   double max = fabs(pulse[fsample]-ped);
  
-  vector<unsigned short>::const_iterator iamp;
+  vector<unsigned int>::const_iterator iamp;
  
 
   for( iamp = pulse.begin() + fsample; 
@@ -611,7 +611,7 @@ maxAmpTime::maxAmpTime() : windowTime(){
 int maxAmpTime::computeTmax(RPPulse& ipulse){
 //*****************************************************************
   
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
     
   int fsample = 0; int lsample = pulse.size();
 
@@ -622,7 +622,7 @@ int maxAmpTime::computeTmax(RPPulse& ipulse){
 
   double max = fabs(pulse[fsample]-ped);
 
-  vector<unsigned short>::const_iterator iamp;
+  vector<unsigned int>::const_iterator iamp;
   
   for( iamp = pulse.begin() + fsample; 
        iamp != pulse.begin() + lsample; 

@@ -111,7 +111,7 @@ bool RecoPulse::execute(gate::Event& evt){
   
   std::vector<gate::Hit*>::iterator ith;
   
-  gate::Run* runInfo = &gate::Centella::instance()->getRun();
+  //gate::Run* runInfo = &gate::Centella::instance()->getRun();
 
   for (ith = pmts.begin(); ith != pmts.end(); ++ith){
     
@@ -121,17 +121,18 @@ bool RecoPulse::execute(gate::Event& evt){
     
     if ((*ith)->GetSensorID()<20) continue;
     
-    double gain = fabs(runInfo->GetSensor((*ith)->GetSensorID())->GetGain());
+    //double gain = fabs(runInfo->GetSensor((*ith)->GetSensorID())->GetGain());
+    double gain = 1;
 
     gate::Waveform& wf = (*ith)->GetWaveform();
     
-    const std::vector<std::pair<unsigned short,unsigned short> >& 
+    const std::vector<std::pair<unsigned int,unsigned int> >& 
         
         pprof = wf.GetData(); 
     
-    std::vector<short unsigned int> prof;
+    std::vector<unsigned int> prof;
     
-    std::vector<std::pair<unsigned short, unsigned short> >::const_iterator it;
+    std::vector<std::pair<unsigned int, unsigned int> >::const_iterator it;
     
     // TO FIX: this won't work with zero-suppression electronics!!!!!!
 
@@ -189,15 +190,15 @@ bool RecoPulse::execute(gate::Event& evt){
     
     gate::Waveform& wf = (*ith2)->GetWaveform();
     
-    const std::vector<std::pair<unsigned short,unsigned short> >& 
+    const std::vector<std::pair<unsigned int,unsigned int> >& 
         
         pprof = wf.GetData(); 
     
-    std::vector<short unsigned int> prof;
+    std::vector<unsigned int> prof;
     
     // TO FIX: this won't work with zero-suppression electronics!!!!!!
 
-    std::vector<std::pair<unsigned short, unsigned short> >::const_iterator it;
+    std::vector<std::pair<unsigned int, unsigned int> >::const_iterator it;
     
     for (it = pprof.begin();it != pprof.end();++it){prof.push_back(it->second);}
     

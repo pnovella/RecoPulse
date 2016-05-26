@@ -236,7 +236,7 @@ bool RecoPulsePed::computeOffsetPedestal(RPPulse& ipulse,
 					 size_t tmin, size_t tmax){
 //*************************************************************
 
-  const vector<unsigned short>& pulse = ipulse.getProfile();
+  const vector<unsigned int>& pulse = ipulse.getProfile();
 
   if (tmin || tmax) this->setWindow(tmin,tmax);
 
@@ -267,7 +267,7 @@ bool RecoPulsePed::computeOffsetPedestal(RPPulse& ipulse,
 bool RecoPulsePed::computeFullPedestal(RPPulse& ipulse){
 //*************************************************************
   
-  vector<unsigned short> pulse = ipulse.getProfile();
+  vector<unsigned int> pulse = ipulse.getProfile();
   
   std::sort(pulse.begin(), pulse.end());
   
