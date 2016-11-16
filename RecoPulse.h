@@ -68,8 +68,14 @@ class RecoPulse : public gate::IAlgo {
   //! minimum pulse amplitude
   double _Imin;
 
-  //! numbe of sigmas above noise
+  //! number of sigmas above noise
   double _nSig;
+  
+  //! reconstruct SiPM waveforms?
+  bool _noSiPM;
+  
+  //! reocntruct only this PMT channel
+  int _PMTCh;
 
   ClassDef(RecoPulse,0)
     

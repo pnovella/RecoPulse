@@ -34,6 +34,14 @@ RecoPulse::RecoPulse(const gate::ParamStore& gs,
     try{  _nSig = gs.fetch_dstore("N_SIGMA");  }
 
     catch(exception& e) { }
+    
+    try{  _PMTCh = gs.fetch_istore("PMT_ID");  }
+
+    catch(exception& e) { }
+    
+    try{  _noSiPM = bool(gs.fetch_istore("NO_SIPM"));  }
+
+    catch(exception& e) { }
 
 }
 
@@ -48,6 +56,10 @@ void RecoPulse::initParams(){
   _Imin = 5;
 
   _nSig = 5;
+  
+  _noSiPM = true;
+  
+  _PMTCh = -1;
 
 }
 
@@ -111,28 +123,36 @@ bool RecoPulse::execute(gate::Event& evt){
   
   std::vector<gate::Hit*>::iterator ith;
   
-  //gate::Run* runInfo = &gate::Centella::instance()->getRun();
+  gate::Run* runInfo = &gate::Centella::instance()->getRun();
 
   for (ith = pmts.begin(); ith != pmts.end(); ++ith){
+      
+    int chID =  (*ith)->GetSensorID();
+      
+    _m.message("PMT",chID,gate::VERBOSE);
     
-    _m.message("PMT",(*ith)->GetSensorID(),gate::VERBOSE);
-    
+    if (_PMTCh >= 0 && _PMTCh!=chID){
+        
+        continue;  }
+
     (*ith)->SetState(gate::RECOED);
     
-    if ((*ith)->GetSensorID()<20) continue;
+    //if ((*ith)->GetSensorID()<20) continue;
     
-    //double gain = fabs(runInfo->GetSensor((*ith)->GetSensorID())->GetGain());
-    double gain = 1;
+    double gain = fabs(runInfo->GetGeometry()->
+                       GetSensor((*ith)->GetSensorID())->GetGain());
+    
+    //double gain = 1;
 
     gate::Waveform& wf = (*ith)->GetWaveform();
     
-    const std::vector<std::pair<unsigned int,unsigned int> >& 
+    const std::vector<std::pair<unsigned int,float> >& 
         
         pprof = wf.GetData(); 
     
     std::vector<unsigned int> prof;
     
-    std::vector<std::pair<unsigned int, unsigned int> >::const_iterator it;
+    std::vector<std::pair<unsigned int, float> >::const_iterator it;
     
     // TO FIX: this won't work with zero-suppression electronics!!!!!!
 
@@ -158,6 +178,8 @@ bool RecoPulse::execute(gate::Event& evt){
             
       pul->SetEndTime(_pmtRecoMan->getPeakIntTends()[i]*_pmtSampWidth );
 
+      pul->SetMaxTime(_pmtRecoMan->getPeakTmaxs()[i]*_pmtSampWidth);
+
       pul->SetMaxADC((int)_pmtRecoMan->getPeakImaxs()[i]);
 
       gate::Centella::instance()->hman()
@@ -175,6 +197,8 @@ bool RecoPulse::execute(gate::Event& evt){
     gate::Centella::instance()->hman()->fill("Qch",_pmtRecoMan->getQ());
 
   } //end of PMT loop
+  
+  if (_noSiPM) return true; // to be improved!!!
 
   std::vector<gate::Hit*> sipms = evt.GetHits(gate::SIPM);
 
@@ -190,7 +214,7 @@ bool RecoPulse::execute(gate::Event& evt){
     
     gate::Waveform& wf = (*ith2)->GetWaveform();
     
-    const std::vector<std::pair<unsigned int,unsigned int> >& 
+    const std::vector<std::pair<unsigned int,float> >& 
         
         pprof = wf.GetData(); 
     
@@ -198,7 +222,7 @@ bool RecoPulse::execute(gate::Event& evt){
     
     // TO FIX: this won't work with zero-suppression electronics!!!!!!
 
-    std::vector<std::pair<unsigned int, unsigned int> >::const_iterator it;
+    std::vector<std::pair<unsigned int, float> >::const_iterator it;
     
     for (it = pprof.begin();it != pprof.end();++it){prof.push_back(it->second);}
     
